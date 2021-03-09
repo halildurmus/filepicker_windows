@@ -27,7 +27,7 @@ class OpenFilePicker extends FileDialog {
 
     final fileDialog = FileOpenDialog.createInstance();
 
-    final pfos = allocate<Uint32>();
+    final pfos = malloc.call<Uint32>();
     hr = fileDialog.GetOptions(pfos);
     if (FAILED(hr)) throw WindowsException(hr);
 
@@ -71,8 +71,7 @@ class OpenFilePicker extends FileDialog {
     }
 
     if (filterSpecification.isNotEmpty) {
-      final rgSpec =
-          allocate<COMDLG_FILTERSPEC>(count: filterSpecification.length);
+      final rgSpec = malloc.call<COMDLG_FILTERSPEC>(filterSpecification.length);
 
       var index = 0;
       for (final key in filterSpecification.keys) {
@@ -113,12 +112,12 @@ class OpenFilePicker extends FileDialog {
         throw WindowsException(hr);
       }
     } else {
-      final ppsi = allocate<IntPtr>();
+      final ppsi = malloc.call<IntPtr>();
       hr = fileDialog.GetResult(ppsi);
       if (FAILED(hr)) throw WindowsException(hr);
 
       final item = IShellItem(ppsi.cast());
-      final pathPtrPtr = allocate<IntPtr>();
+      final pathPtrPtr = malloc.call<IntPtr>();
       hr = item.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, pathPtrPtr.cast());
       if (FAILED(hr)) throw WindowsException(hr);
 

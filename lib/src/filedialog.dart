@@ -128,14 +128,15 @@ abstract class FileDialog {
 
     final folderGUID = _KnownFolderMappings[folder]!;
     final knownFolderManager = KnownFolderManager.createInstance();
-    final publicMusicFolder = GUID.fromString(folderGUID);
+    final publicMusicFolder = GUID();
+    publicMusicFolder.setGUID(folderGUID);
 
-    final ppkf = allocate<IntPtr>();
+    final ppkf = malloc.call<IntPtr>();
     hr = knownFolderManager.GetFolder(publicMusicFolder.addressOf, ppkf);
     if (FAILED(hr)) throw WindowsException(hr);
     final knownFolder = IKnownFolder(ppkf.cast());
 
-    final psi = allocate<IntPtr>();
+    final psi = malloc.call<IntPtr>();
     final riid = convertToIID(IID_IShellItem);
     hr = knownFolder.GetShellItem(0, riid, psi);
     if (FAILED(hr)) throw WindowsException(hr);

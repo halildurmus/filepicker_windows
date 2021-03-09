@@ -18,7 +18,7 @@ class DirectoryPicker extends FileDialog {
 
     final dialog = FileOpenDialog.createInstance();
 
-    final pfos = allocate<Uint32>();
+    final pfos = malloc.call<Uint32>();
     hr = dialog.GetOptions(pfos);
     if (FAILED(hr)) throw WindowsException(hr);
 
@@ -69,12 +69,12 @@ class DirectoryPicker extends FileDialog {
         throw WindowsException(hr);
       }
     } else {
-      final ppsi = allocate<IntPtr>();
+      final ppsi = malloc.call<IntPtr>();
       hr = dialog.GetResult(ppsi);
       if (FAILED(hr)) throw WindowsException(hr);
 
       final item = IShellItem(ppsi.cast());
-      final pathPtrPtr = allocate<IntPtr>();
+      final pathPtrPtr = malloc.call<IntPtr>();
       hr = item.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, pathPtrPtr.cast());
       if (FAILED(hr)) throw WindowsException(hr);
 
