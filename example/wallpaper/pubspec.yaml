@@ -20,7 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  win32: ^2.3.8
+  win32: ^3.0.0
 
 flutter:
   uses-material-design: true

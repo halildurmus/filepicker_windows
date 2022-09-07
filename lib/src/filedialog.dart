@@ -125,8 +125,7 @@ abstract class FileDialog {
 
   /// Add a known folder to the 'Quick Access' list.
   void addPlace(WindowsKnownFolder folder, Place location) {
-    var hr = CoInitializeEx(
-        nullptr, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+    var hr = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
     if (FAILED(hr)) throw WindowsException(hr);
 
     final folderGUID = _knownFolderMappings[folder]!;
@@ -134,13 +133,13 @@ abstract class FileDialog {
     final publicMusicFolder = calloc<GUID>()..ref.setGUID(folderGUID);
 
     final ppkf = calloc<Pointer<COMObject>>();
-    hr = knownFolderManager.GetFolder(publicMusicFolder, ppkf);
+    hr = knownFolderManager.getFolder(publicMusicFolder, ppkf);
     if (FAILED(hr)) throw WindowsException(hr);
     final knownFolder = IKnownFolder(ppkf.cast());
 
     final psi = calloc<Pointer>();
     final riid = convertToIID(IID_IShellItem);
-    hr = knownFolder.GetShellItem(0, riid, psi);
+    hr = knownFolder.getShellItem(0, riid, psi);
     if (FAILED(hr)) throw WindowsException(hr);
     final shellItem = IShellItem(psi.cast());
 
