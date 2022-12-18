@@ -115,6 +115,22 @@ class OpenFilePicker extends FileDialog {
       }
     }
 
+    if (initialDirectory != null) {
+      final ppv = calloc<Pointer>();
+      final riid = convertToIID(IID_IShellItem);
+      hr = SHCreateItemFromParsingName(
+        TEXT(initialDirectory!),
+        nullptr,
+        riid,
+        ppv,
+      );
+      if (FAILED(hr)) throw WindowsException(hr);
+
+      final psi = Pointer.fromAddress(ppv.cast<IntPtr>().value);
+      hr = fileDialog.setDefaultFolder(psi.cast());
+      if (FAILED(hr)) throw WindowsException(hr);
+    }
+
     for (final place in customPlaces) {
       final shellItem =
           Pointer.fromAddress(place.item.ptr.cast<IntPtr>().value);
