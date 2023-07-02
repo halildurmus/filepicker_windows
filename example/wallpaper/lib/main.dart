@@ -67,29 +67,28 @@ class _HomePageState extends State<HomePage> {
                           'All Files (*.*)': '*.*'
                         };
 
-                      final result = file.getFile();
-                      if (result != null) {
-                        setState(() {
-                          path = result;
-                        });
-                      }
-                    },
-                    child: const Text('Open file dialog'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (path != null) {
-                        Wallpaper.set(path!);
-                      }
-                    },
-                    child: const Text('Set Wallpaper'),
-                  )
-                ],
+                        final result = file.getFile();
+                        if (result != null) {
+                          setState(() {
+                            path = result;
+                          });
+                        }
+                      },
+                      child: const Text('Open file dialog'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (path != null) {
+                          Wallpaper.set(path!);
+                        }
+                      },
+                      child: const Text('Set Wallpaper'),
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 }

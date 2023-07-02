@@ -2,7 +2,7 @@ import 'package:filepicker_windows/filepicker_windows.dart';
 import 'package:path_provider_windows/path_provider_windows.dart';
 
 // Normal file open dialog box example
-void main() async {
+void main() {
   final file = OpenFilePicker()
     ..filterSpecification = {
       'Word Document (*.doc)': '*.doc',
