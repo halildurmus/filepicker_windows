@@ -92,7 +92,7 @@ class SaveFilePicker extends FileDialog {
       }
     }
 
-    if (initialDirectory != null) {
+    if (initialDirectory != null && initialDirectory!.isNotEmpty) {
       final ppv = calloc<Pointer>();
       final riid = convertToIID(IID_IShellItem);
       hr = SHCreateItemFromParsingName(
