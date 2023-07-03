@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                         final result = file.getFile();
                         if (result != null) {
                           setState(() {
-                            path = result.first;
+                            path = result;
                           });
                         }
                       },

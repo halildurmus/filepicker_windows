@@ -1,6 +1,7 @@
 import 'package:filepicker_windows/filepicker_windows.dart';
 
 // Normal file open dialog box example
+
 void main() {
   final file = OpenFilePicker()
     ..filterSpecification = {
