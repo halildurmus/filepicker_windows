@@ -33,39 +33,39 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(path != null ? path.toString() : 'Select a file'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 2,
-              width: MediaQuery.of(context).size.width - 100,
-              child: path == null ? const Placeholder() : Image.file(path!),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                    onPressed: () async {
-                      final file = picker.OpenFilePicker()
-                        ..initialDirectory =
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text(path != null ? path.toString() : 'Select a file'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 2,
+                width: MediaQuery.of(context).size.width - 100,
+                child: path == null ? const Placeholder() : Image.file(path!),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        final picturesDirectory =
                             await path_provider.PathProviderWindows()
-                                .getPath(win32.FOLDERID_Pictures)
-                        ..hidePinnedPlaces = true
-                        ..forcePreviewPaneOn = true
-                        ..title = 'Select an image'
-                        ..filterSpecification = {
-                          'JPEG Files': '*.jpg;*.jpeg',
-                          'Bitmap Files': '*.bmp',
-                          'All Files (*.*)': '*.*'
-                        };
+                                .getPath(win32.FOLDERID_Pictures);
+                        final file = picker.OpenFilePicker()
+                          ..initialDirectory = picturesDirectory
+                          ..hidePinnedPlaces = true
+                          ..forcePreviewPaneOn = true
+                          ..title = 'Select an image'
+                          ..filterSpecification = {
+                            'JPEG Files': '*.jpg;*.jpeg',
+                            'Bitmap Files': '*.bmp',
+                            'All Files (*.*)': '*.*'
+                          };
 
                         final result = file.getFile();
                         if (result != null) {

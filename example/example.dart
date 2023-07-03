@@ -1,5 +1,4 @@
 import 'package:filepicker_windows/filepicker_windows.dart';
-import 'package:path_provider_windows/path_provider_windows.dart';
 
 // Normal file open dialog box example
 void main() {
@@ -12,8 +11,6 @@ void main() {
     }
     ..defaultFilterIndex = 0
     ..defaultExtension = 'doc'
-    ..initialDirectory =
-        await PathProviderWindows().getApplicationDocumentsPath()
     ..title = 'Select a document';
 
   final result = file.getFile();

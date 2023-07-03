@@ -93,22 +93,30 @@ class SaveFilePicker extends FileDialog {
     }
 
     if (initialDirectory != null && initialDirectory!.isNotEmpty) {
-      final ppv = calloc<Pointer>();
+      final pszPath = initialDirectory!.toNativeUtf16();
       final riid = convertToIID(IID_IShellItem);
-      hr = SHCreateItemFromParsingName(
-        TEXT(initialDirectory!),
-        nullptr,
-        riid,
-        ppv,
-      );
-      if (FAILED(hr)) throw WindowsException(hr);
+      final ppv = calloc<Pointer>();
+      try {
+        var hr = SHCreateItemFromParsingName(
+          pszPath,
+          nullptr,
+          riid,
+          ppv,
+        );
+        if (FAILED(hr)) throw WindowsException(hr);
 
-      final psi = Pointer.fromAddress(ppv.cast<IntPtr>().value);
-      hr = fileDialog.setDefaultFolder(psi.cast());
-      if (FAILED(hr)) throw WindowsException(hr);
+        final shellItem = IShellItem(ppv.cast());
+
+        hr = fileDialog
+            .setDefaultFolder(shellItem.ptr.cast<Pointer<COMObject>>().value);
+        if (FAILED(hr)) throw WindowsException(hr);
+      } finally {
+        free(riid);
+        free(pszPath);
+      }
     }
 
-    hr = fileDialog.show(hWndOwner);
+    final hr = fileDialog.show(hWndOwner);
     if (!SUCCEEDED(hr)) {
       if (hr == HRESULT_FROM_WIN32(ERROR_CANCELLED)) {
         didUserCancel = true;
