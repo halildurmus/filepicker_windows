@@ -71,7 +71,7 @@ class OpenFilePicker extends FileDialog {
 
     final fileDialog = _createDialog(multiSelect: true);
 
-    final hr = fileDialog.show(NULL);
+    final hr = fileDialog.show(hWndOwner);
     if (FAILED(hr)) {
       if (hr == HRESULT_FROM_WIN32(WIN32_ERROR.ERROR_CANCELLED)) {
         didUserCancel = true;
