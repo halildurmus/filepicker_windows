@@ -13,8 +13,8 @@ The package can now be found at <https://github.com/halildurmus/win32/tree/main/
 **File and directory picker for Windows that uses common dialog controls.**
 
 This package builds on top of the [package:win32][win32_pub_dev_link] and
-provides a high-level abstraction over native registry APIs. It eliminates the
-need to work directly with FFI, raw pointers, or low-level Win32 calls while
+provides a high-level abstraction over native file picker APIs. It eliminates
+the need to work directly with FFI, raw pointers, or low-level Win32 calls while
 preserving performance and correctness.
 
 ## ✨ Features
